@@ -1,30 +1,48 @@
 import React, { Fragment } from "react"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom"
+import Navbar from "react-bootstrap/Navbar"
+import Nav from "react-bootstrap/Nav"
+import Button from "react-bootstrap/Button"
+import Form from "react-bootstrap/Form"
+import FormControl from "react-bootstrap/FormControl"
+
 
 import './App.css';
+import Perfil from './perfil'
 
 
 export default function App() {
 
+  const name = 'EXEMPLO'
+
   return (
+      
     <Router>
       <main>
-        <nav>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/diretor">Diretor</a></li>
-            <li><a href="/login">login</a></li>
-            <li><a href="/cadastro">Cadastro</a></li>
-            <li><a href="/perfil">Perfil</a></li>
-            <li><a href="/ponto">Ponto</a></li>
-          </ul>
-          </nav>
-          <Route path="/" component={Home} />
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+            <Nav className="mr-auto">
+              <Nav.Link><Link to={`/perfil/${name}`}>Perfil</Link></Nav.Link>
+              <Nav.Link><Link to="/ponto">Ponto</Link></Nav.Link>
+              <Nav.Link><Link to="/login">Login</Link></Nav.Link>
+              <Nav.Link><Link to="/diretor">Diretor</Link></Nav.Link>
+              <Nav.Link><Link to="/cadastro">Cadastro</Link></Nav.Link>
+            </Nav>
+          <Form inline>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-light">Search</Button>
+          </Form>
+        </Navbar>
+        <br />
+        <Switch>
+          <Route path="/" exact component={Home} />
           <Route path="/diretor" component={Diretor} />
           <Route path="/login" component={Login} />
           <Route path="/cadastro" component={Cadastro} />
-          <Route path="/perfil" component={Perfil} />
+          <Route path="/perfil/:name" component={Perfil} />
           <Route path="/ponto" component={Ponto} />
+          <Route render={() => <h1>404: página não encontrada</h1>} />
+        </Switch>
       </main>
     </Router>
   );
@@ -63,10 +81,11 @@ const Cadastro = () => (
   );
 
 //profile Page
-const Perfil = () => (
+const variavel_teste = ({match:{params:{name}}}) => (
+  // {match:{params:{name}}} == props.match.params.name
   <Fragment>
-    <h1>perfil</h1>
-    <FakeText />
+    <h1>perfil de {name}</h1>
+    <Perfil />
   </Fragment>
   );
 
