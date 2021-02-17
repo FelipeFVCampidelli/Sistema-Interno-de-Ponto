@@ -8,8 +8,13 @@ import FormControl from "react-bootstrap/FormControl"
 
 
 import './App.css';
-import Perfil from './perfil'
-
+import Perfil from './Perfil/perfil'
+import Diretor from './Diretor/diretor'
+import Login from './Login/login'
+import Cadastro from './CRUD/cadastro'
+import Edit from './CRUD/edit'
+import Delete from './CRUD/delete'
+import Ponto from './Ponto/ponto'
 
 export default function App() {
 
@@ -39,6 +44,8 @@ export default function App() {
           <Route path="/diretor" component={Diretor} />
           <Route path="/login" component={Login} />
           <Route path="/cadastro" component={Cadastro} />
+          <Route path="/edit" component={Edit} />
+          <Route path="/delete" component={Delete} />
           <Route path="/perfil/:name" component={Perfil} />
           <Route path="/ponto" component={Ponto} />
           <Route render={() => <h1>404: página não encontrada</h1>} />
@@ -54,52 +61,9 @@ const Home = () => (
     <h1>Home</h1>
     <FakeText />
   </Fragment>
-  );
-
-// Director Page
-const Diretor = () => (
-  <Fragment>
-    <h1>diretor</h1>
-    <FakeText />
-  </Fragment>
-  );
-
-// Login Page
-const Login = () => (
-  <Fragment>
-    <h1>login</h1>
-    <FakeText />
-  </Fragment>
-  );
-
-//signup Page
-const Cadastro = () => (
-  <Fragment>
-    <h1>cadastro</h1>
-    <FakeText />
-  </Fragment>
-  );
-
-//profile Page
-const variavel_teste = ({match:{params:{name}}}) => (
-  // {match:{params:{name}}} == props.match.params.name
-  <Fragment>
-    <h1>perfil de {name}</h1>
-    <Perfil />
-  </Fragment>
-  );
-
-//Ponto Page
-const Ponto = () => (
-  <Fragment>
-    <h1>ponto</h1>
-    <FakeText />
-  </Fragment>
-  );
+);
 
 const FakeText = () => (
-  <p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </p>
-  )
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+)
 
