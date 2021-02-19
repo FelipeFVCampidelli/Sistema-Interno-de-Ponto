@@ -1,11 +1,12 @@
-import React, { Fragment } from "react"
+/* eslint-disable react/jsx-no-comment-textnodes */
+import React, { Fragment, useEffect, useState } from "react"
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom"
+import Axios from 'axios';
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import FormControl from "react-bootstrap/FormControl"
-
 
 import './App.css';
 import Perfil from './Perfil/perfil'
@@ -16,9 +17,19 @@ import Edit from './CRUD/edit'
 import Delete from './CRUD/delete'
 import Ponto from './Ponto/ponto'
 
+
 export default function App() {
 
   const name = 'EXEMPLO'
+
+  //GET
+  const [funcionario, setFuncionario] = useState([])
+  useEffect(() => {
+    Axios.get("http://localhost:4001/user/search").then(res => {
+      console.log(res.data)
+      setFuncionario(res.data)
+    })
+  })
 
   return (
       
@@ -59,11 +70,6 @@ export default function App() {
 const Home = () => (
   <Fragment>
     <h1>Home</h1>
-    <FakeText />
+    <p>Bem vindo de volta!</p>
   </Fragment>
 );
-
-const FakeText = () => (
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-)
-
