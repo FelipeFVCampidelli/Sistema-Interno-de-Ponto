@@ -48,6 +48,16 @@ export default function Perfil() {
       quinta: '00:00',
       sexta: '00:00',
       total: 'Soma'
+    },
+    {
+      id: 4,
+      Name: 'EXEMPLO 5',
+      segunda: '00:00',
+      terca: '00:00',
+      quarta: '00:00',
+      quinta: '00:00',
+      sexta: '00:00',
+      total: 'Soma'
     }
   ]
 

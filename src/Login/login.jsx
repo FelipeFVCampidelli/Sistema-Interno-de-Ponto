@@ -14,11 +14,11 @@ export default function Login() {
             <Form>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Nome de usuário</Form.Label>
-                <Form.Control type="username" placeholder="Insíra seu nome de usuário" />
+                <Form.Control type="username" placeholder="Insíra seu nome de usuário" required />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Senha</Form.Label>
-                <Form.Control type="senha" placeholder="Insira sua senha" />
+                <Form.Control type="password" placeholder="Insira sua senha" required />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Logar
