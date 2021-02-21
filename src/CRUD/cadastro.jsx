@@ -38,9 +38,7 @@ export default function Cadastro(props) {
                   <option>director</option>
                 </Form.Control> */}
             </Form.Group>
-              <Button variant="success" type="cadastrar">
-                Cadastrar
-              </Button>
+              <Button variant="success" type="cadastrar">Cadastrar</Button>
             </Form>
           </Col>
         </Row>

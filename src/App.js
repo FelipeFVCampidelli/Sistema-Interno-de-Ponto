@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Link, Route, Switch, Redirect } from "react-ro
 import Axios from 'axios';
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
-import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
-import FormControl from "react-bootstrap/FormControl"
+import Button from "react-bootstrap/Button"
+import Select from 'react-select'
 
 import './App.css';
 import Perfil from './Perfil/perfil'
@@ -15,7 +15,6 @@ import Cadastro from './CRUD/cadastro'
 import Edit from './CRUD/edit'
 import Delete from './CRUD/delete'
 import Ponto from './Ponto/ponto'
-
 
 export default function App() {
 
@@ -101,7 +100,7 @@ export default function App() {
     .catch(function (err){console.log(err);})
   }
   const formHandlersEdit = {handleEmailEditChange, handlePhoneEditChange, handleNameEditChange,
-                            handlePasswordEditChange,  handleSubmitEdit}; 
+                            handlePasswordEditChange,  handleSubmitEdit};
   //////////////
   ////DELETE////
   //////////////
@@ -116,16 +115,37 @@ export default function App() {
     })
     .catch(function (err){console.log(err);})
   }
-  const formHandlersDelete = {handleSubmitDelete};                             
+  const formHandlersDelete = {handleSubmitDelete};
 
+  //////////////
+  ////SEARCH////
+  //////////////
   //GET de pesquisa
-  let [funcionario, setFuncionario] = useState( [{ funcionarios: {} }] );
+  const [options,setOptions] = useState([])
   useEffect(() => {
     Axios.get("http://localhost:4001/user/search").then(res => {
-      setFuncionario(res.data)
+      setOptions(res.data)
     }).catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
-  }, [])//{funcionario[0].username}
+  }, [])
 
+  const [idS,setIdS] = useState()
+  const handleSelectChange = (e) => {
+    const {value} = e
+    console.log(value)
+    setIdS(value)
+  }
+  function handleSubmitSearch(event){
+    event.preventDefault();
+    const pacotinho = {id: idS}
+    Axios.post(`http://localhost:4001/user/${idS}`, pacotinho) //post pra deletar
+    .then((res) => {
+      console.log(res.data + "apagado")
+      if(res.status === 201){
+        console.log(res.data)
+      }else{alert("Erro no cadastro");}
+    })
+    .catch(function (err){console.log(err.response);})
+  }
   return (
     <Router>
       <main>
@@ -140,10 +160,10 @@ export default function App() {
               <Nav.Link><Link to="/edit">Edit</Link></Nav.Link>
               <Nav.Link><Link to="/delete">Delete</Link></Nav.Link>
             </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light">Search</Button>
-          </Form> 
+            <Form inline onSubmit={handleSubmitSearch}>
+              <Select styles="neutral190" onChange={handleSelectChange} options={options} value={options.id}/>
+              <Button type="submit" variant="outline-light">Search</Button>
+            </Form>
         </Navbar>
         <br />
         <Switch>
