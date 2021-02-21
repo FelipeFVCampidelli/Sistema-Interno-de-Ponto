@@ -7,9 +7,7 @@ import './login.css';
 
 export default function Login(props) {
 
-  const {
-    handlePasswordChange, handleNameChange, handleSubmit,
-  } = props.formHandlers;
+  const {handlePasswordChange, handleNameChange, handleSubmit} = props.formHandlers;
 
   return (
     <div>

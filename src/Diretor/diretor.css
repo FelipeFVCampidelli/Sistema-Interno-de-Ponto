@@ -1,3 +1,23 @@
 .table{
   margin-bottom: 80px;
 }
+.col *{
+  justify-content: center;
+}
+.verde{
+  margin-top: 5%;
+  margin-left: 25%;
+  max-width: 100%;
+}
+
+.amarelo{
+  margin-top: 5%;
+  margin-left: 15%;
+  max-width: 100%;
+}
+
+.vermelho{
+  margin-top: 5%;
+  margin-left: 15%;
+  max-width: 100%;
+}

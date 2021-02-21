@@ -1,13 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import Axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
+import {BrowserRouter as Link} from 'react-router-dom';
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
 import './diretor.css';
 
-export default function Perfil() {
-  const name = 'DIRETOR'
-  const mail = 'DIRETOR@gmail.com'
-  const phone = '0000-0000'
-  
+export default function Perfil(props) {
+  const id = props.id
+  //GET de perfil
+  const [perfilD, setPerfilD] = useState( {username: '', email: '', cellphoneNumber: ''} );
+  useEffect(() => {
+    Axios.get(`http://localhost:4001/user/diretor/${id}`).then(res => {setPerfilD(res.data)})
+    .catch((err) => {console.error("ops! ocorreu um erro " + err.response);})
+  }, [id])//{perfilD.username/.email/.cellphoneNumber}
   const funcionarios = [
     {
       id: 0,
@@ -60,7 +66,6 @@ export default function Perfil() {
       total: 'Soma'
     }
   ]
-
   const renderFuncionario = (funcionario, index) => {
     return (
       <tr key={index}>
@@ -74,36 +79,36 @@ export default function Perfil() {
       </tr>
     )
   }
-  
   return (
-      <div>
-        <Container fluid>
-          <Row>
-            <Col>
-              <h1>Diretor</h1>
-              <p>Nome: {name} </p>
-              <p>Email: {mail} </p>
-              <p>Telefone: {phone} </p>
-            </Col>
-          </Row>
-        </Container>
-        <h1>Tabela de Pontos</h1>
-        <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Segunda</th>
-              <th>Terça</th>
-              <th>Quarta</th>
-              <th>Quinta</th>
-              <th>Sexta</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {funcionarios.map(renderFuncionario)}
-          </tbody>
-        </Table>
-      </div>
+    <div>
+      <Container fluid>
+        <Row>
+          <Col>
+            <h1>Diretor</h1>
+            <p>Nome: {perfilD.username} </p>
+            <p>Email: {perfilD.email} </p>
+            <p>Telefone: {perfilD.cellphoneNumber} </p>
+            <Button href="/cadastro" className="verde" variant="success">Cadastrar</Button>
+            <Button href="/edit" className="amarelo" variant="warning" type="editar">Editar</Button>
+            <Button href="/delete" className="vermelho" variant="danger" type="excluir">Excluir</Button>
+          </Col>
+        </Row>
+      </Container>
+      <h1>Tabela de Pontos</h1>
+      <Table striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Segunda</th>
+            <th>Terça</th>
+            <th>Quarta</th>
+            <th>Quinta</th>
+            <th>Sexta</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>{funcionarios.map(renderFuncionario)}</tbody>
+      </Table>
+    </div>
   );
 }
