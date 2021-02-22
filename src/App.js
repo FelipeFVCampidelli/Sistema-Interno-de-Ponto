@@ -69,11 +69,12 @@ export default function App() {
     const pacotinho = {username: nameCadastro, password: passwordCadastro, email: emailCadastro, celphoneNumber: phoneCadastro, role: rankCadastro}
     Axios.post("http://localhost:4001/user/cadastro", pacotinho)
     .then((res) => {
+      console.log(res.status)
       if(res.status === 201){
-        console.log(res.data)
-      }else{alert("Erro no cadastro");}
+        alert("Perfil cadastrado")
+      }
     })
-    .catch(function (err){console.log(err);})
+    .catch(function (err){console.log(err); alert("Erro no cadastro")})
   }
   const formHandlersCadastro = {handleEmailCadastroChange, handlePhoneCadastroChange, handleNameCadastroChange,
                                 handlePasswordCadastroChange, handleRankCadastroChange, handleSubmitCadastro};
@@ -104,18 +105,29 @@ export default function App() {
   //////////////
   ////DELETE////
   //////////////
+  //GET de pesquisa
+  const [optionsD,setOptionsD] = useState([])
+  useEffect(() => {
+    Axios.get("http://localhost:4001/user/search").then(res => {
+      setOptionsD(res.data)
+    }).catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
+  }, [])
+
+  const [idD,setIdD] = useState()
+  const handleSelectChangeDelete = (e) => {
+    const {value} = e
+    console.log(value)
+    setIdD(value)
+  }
   function handleSubmitDelete(event){
     event.preventDefault();
-    const pacotinho = {username: nameEdit, password: passwordEdit, email: emailEdit, celphoneNumber: phoneEdit}
-    Axios.post("http://localhost:4001/user", pacotinho)
+    Axios.delete(`http://localhost:4001/user/${idD}`)
     .then((res) => {
-      if(res.status === 201){
-        console.log(res.data)
-      }else{alert("Erro no cadastro");}
+      if(res.status === 200) alert("Usuário " + res.data.username + " apagado")
     })
-    .catch(function (err){console.log(err);})
+    .catch(function (err){console.log(err.response);})
   }
-  const formHandlersDelete = {handleSubmitDelete};
+  const formHandlersDelete = {handleSelectChangeDelete, handleSubmitDelete, optionsD, idD};
 
   //////////////
   ////SEARCH////
@@ -136,13 +148,9 @@ export default function App() {
   }
   function handleSubmitSearch(event){
     event.preventDefault();
-    const pacotinho = {id: idS}
-    Axios.post(`http://localhost:4001/user/${idS}`, pacotinho) //post pra deletar
+    Axios.delete(`http://localhost:4001/user/${idS}`)
     .then((res) => {
-      console.log(res.data + "apagado")
-      if(res.status === 201){
-        console.log(res.data)
-      }else{alert("Erro no cadastro");}
+
     })
     .catch(function (err){console.log(err.response);})
   }
