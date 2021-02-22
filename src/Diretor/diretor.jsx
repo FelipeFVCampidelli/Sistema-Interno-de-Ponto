@@ -95,10 +95,12 @@ export default function Perfil(props) {
             <Button href="/cadastro" className="verde" variant="success">Cadastrar</Button>
             <Button href="/edit" className="amarelo" variant="warning" type="editar">Editar</Button>
             <Button href="/delete" className="vermelho" variant="danger" type="excluir">Excluir</Button>
+            
             <Form className="FormDiretorP"inline onSubmit={handleSubmitSearch}>
               <Select className="FormDiretor" styles="neutral190" onChange={handleSelectChange} options={options} value={options.id}/>
               <Button type="submit" variant="outline-light">Search</Button>
             </Form>
+          
           </Col>
         </Row>
       </Container>
