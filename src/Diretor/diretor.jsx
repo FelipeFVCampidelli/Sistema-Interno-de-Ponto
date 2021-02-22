@@ -6,13 +6,13 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
 import './diretor.css';
+import { Redirect } from 'react-router-dom';
 
 export default function Perfil(props) {
   
   const id = props.id
   const {handleSelectChange, handleSubmitSearch, options} = props.formHandlersBusca
-
-  const [perfilD, setPerfilD] = useState( {username: '', email: '', cellphoneNumber: ''} );
+  const [perfilD, setPerfilD] = useState({username: '', email: '', cellphoneNumber: ''});
   useEffect(() => {
     Axios.get(`http://localhost:4001/user/diretor/${id}`).then(res => {setPerfilD(res.data)})
     .catch((err) => {console.error("ops! ocorreu um erro " + err.response);})
@@ -96,7 +96,7 @@ export default function Perfil(props) {
             <Button href="/edit" className="amarelo" variant="warning" type="editar">Editar</Button>
             <Button href="/delete" className="vermelho" variant="danger" type="excluir">Excluir</Button>
             
-            <Form className="FormDiretorP"inline onSubmit={handleSubmitSearch}>
+            <Form className="FormDiretorP" inline onSubmit={handleSubmitSearch}>
               <Select className="FormDiretor" styles="neutral190" onChange={handleSelectChange} options={options} value={options.id}/>
               <Button type="submit" variant="outline-light">Search</Button>
             </Form>

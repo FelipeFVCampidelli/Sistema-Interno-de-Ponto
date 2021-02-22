@@ -36,9 +36,9 @@ export default function App() {
         setId(dados.id)
         if(dados.director){setDiretor(true)}
         setLogin(true);
-      }else{alert(res.data);}
+      }else{alert("Erro no envio")}
     })
-    .catch(function (err){console.log(err.response);})
+    .catch(function (err){alert("Erro no login");})
   }
   const formHandlers = {handlePasswordChange, handleNameChange, handleSubmit};
   function redirectToLogin() {if (!login) {return <Redirect to='/login'></Redirect>;}}
@@ -133,9 +133,9 @@ export default function App() {
   //////////////
   const [options,setOptions] = useState([])
   useEffect(() => {
-    Axios.get("http://localhost:4001/user/search").then(res => {
-      setOptions(res.data)
-    }).catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
+    Axios.get("http://localhost:4001/user/search")
+    .then(res => {setOptions(res.data)})
+    .catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
   }, [])
   const [idS,setIdS] = useState()
   const handleSelectChange = (e) => {
@@ -145,9 +145,10 @@ export default function App() {
   }
   function handleSubmitSearch (event) {
     event.preventDefault();
-    return(<Redirect path='/perfil'></Redirect>)
+    return(<Redirect to="/perfil"></Redirect>)
   }
   const formHandlersBusca = {handleSelectChange, handleSubmitSearch, options};
+
   
   return (
     <Router>
