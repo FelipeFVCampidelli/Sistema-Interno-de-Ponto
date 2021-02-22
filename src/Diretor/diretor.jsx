@@ -1,18 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import Axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
-import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
+import Select from 'react-select';
 import './diretor.css';
 
 export default function Perfil(props) {
+  
   const id = props.id
-  //GET de perfil
+  const {handleSelectChange, handleSubmitSearch, options} = props.formHandlersBusca
+
   const [perfilD, setPerfilD] = useState( {username: '', email: '', cellphoneNumber: ''} );
   useEffect(() => {
     Axios.get(`http://localhost:4001/user/diretor/${id}`).then(res => {setPerfilD(res.data)})
     .catch((err) => {console.error("ops! ocorreu um erro " + err.response);})
-  }, [id])//{perfilD.username/.email/.cellphoneNumber}
+  }, [id])
+  
   const funcionarios = [
     {
       id: 0,
@@ -90,6 +95,10 @@ export default function Perfil(props) {
             <Button href="/cadastro" className="verde" variant="success">Cadastrar</Button>
             <Button href="/edit" className="amarelo" variant="warning" type="editar">Editar</Button>
             <Button href="/delete" className="vermelho" variant="danger" type="excluir">Excluir</Button>
+            <Form inline onChange={handleSubmitSearch}>
+              <Select styles="neutral190" onChange={handleSelectChange} options={options} value={options.id}/>
+              <Button type="submit" variant="outline-light">Search</Button>
+            </Form>
           </Col>
         </Row>
       </Container>

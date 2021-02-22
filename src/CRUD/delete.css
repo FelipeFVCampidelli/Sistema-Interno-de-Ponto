@@ -4,12 +4,5 @@
 }
 .FormDelete{
   color: black;
-  text-align: left;
-  align-content: left;
   justify-content: left;
-  float: left;
-}
-
-.col{
-  justify-self: left;
 }

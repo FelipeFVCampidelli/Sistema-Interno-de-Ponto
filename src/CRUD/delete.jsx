@@ -15,7 +15,8 @@ export default function Delete(props) {
           <Col>
             <h1>Página de Exclusão</h1>
             <Form inline onSubmit={handleSubmitDelete}>
-              <Select className="FormDelete" placeholder="Digite o nome do perfil a ser deletado" styles="neutral190" onChange={handleSelectChangeDelete} options={optionsD} value={optionsD.id}/>
+              <Select className="FormDelete" placeholder="Digite o nome do perfil a ser deletado" styles="neutral190" 
+                      onChange={handleSelectChangeDelete} options={optionsD} value={optionsD.id}/>
               <Button variant="danger" type="excluir">Excluir</Button>
             </Form>
           </Col>

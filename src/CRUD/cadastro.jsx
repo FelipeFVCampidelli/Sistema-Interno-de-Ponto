@@ -31,12 +31,8 @@ export default function Cadastro(props) {
                 <Form.Control type="password" onChange={handlePasswordCadastroChange} placeholder="Insira a senha a ser cadastrada" />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Escolha o nível de hirarquia do usuário</Form.Label>
+                <Form.Label>Escolha o nível de hierarquia do usuário</Form.Label>
                 <Form.Control type="rank" onChange={handleRankCadastroChange} placeholder="member/director" />
-                {/* <Form.Control onChange={handleRankCadastroChange} as="select">
-                  <option>member</option>
-                  <option>director</option>
-                </Form.Control> */}
             </Form.Group>
               <Button variant="success" type="cadastrar">Cadastrar</Button>
             </Form>

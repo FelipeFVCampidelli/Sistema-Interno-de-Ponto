@@ -3,9 +3,6 @@ import { BrowserRouter as Router, Link, Route, Switch, Redirect } from "react-ro
 import Axios from 'axios';
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
-import Form from "react-bootstrap/Form"
-import Button from "react-bootstrap/Button"
-import Select from 'react-select'
 
 import './App.css';
 import Perfil from './Perfil/perfil'
@@ -68,12 +65,7 @@ export default function App() {
     event.preventDefault();
     const pacotinho = {username: nameCadastro, password: passwordCadastro, email: emailCadastro, celphoneNumber: phoneCadastro, role: rankCadastro}
     Axios.post("http://localhost:4001/user/cadastro", pacotinho)
-    .then((res) => {
-      console.log(res.status)
-      if(res.status === 201){
-        alert("Perfil cadastrado")
-      }
-    })
+    .then((res) => {if(res.status === 201){alert("Perfil cadastrado")}})
     .catch(function (err){console.log(err); alert("Erro no cadastro")})
   }
   const formHandlersCadastro = {handleEmailCadastroChange, handlePhoneCadastroChange, handleNameCadastroChange,
@@ -89,30 +81,40 @@ export default function App() {
   function handlePhoneEditChange(event) {setPhoneEdit(event.target.value);}
   function handleNameEditChange(event) {setNameEdit(event.target.value);}
   function handlePasswordEditChange(event) {setPasswordEdit(event.target.value);}
+  const [optionsE,setOptionsE] = useState([])
+  useEffect(() => {
+    Axios.get("http://localhost:4001/user/search")
+    .then(res => {setOptionsE(res.data)})
+    .catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
+  }, [])
+  const [idE,setIdE] = useState()
+  const handleSelectChangeEdit = (e) => {
+    const {value} = e
+    console.log(value)
+    setIdE(value)
+  }
   function handleSubmitEdit(event){
     event.preventDefault();
-    const pacotinho = {username: nameEdit, password: passwordEdit, email: emailEdit, celphoneNumber: phoneEdit}
+    const pacotinho = { id: idE, username: nameEdit, password: passwordEdit, email: emailEdit, celphoneNumber: phoneEdit}
     Axios.put("http://localhost:4001/user", pacotinho)
     .then((res) => {
-      if(res.status === 201){
-        console.log(res.data)
-      }else{alert("Erro no cadastro");}
+      if(res.status === 200){
+        alert("Perfil atualizado")
+      }else{alert("Erro na atualização do perfil");}
     })
     .catch(function (err){console.log(err);})
   }
   const formHandlersEdit = {handleEmailEditChange, handlePhoneEditChange, handleNameEditChange,
-                            handlePasswordEditChange,  handleSubmitEdit};
+                            handlePasswordEditChange, handleSelectChangeEdit, handleSubmitEdit, optionsE};
   //////////////
   ////DELETE////
   //////////////
-  //GET de pesquisa
   const [optionsD,setOptionsD] = useState([])
   useEffect(() => {
-    Axios.get("http://localhost:4001/user/search").then(res => {
-      setOptionsD(res.data)
-    }).catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
+    Axios.get("http://localhost:4001/user/search")
+    .then(res => {setOptionsD(res.data)})
+    .catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
   }, [])
-
   const [idD,setIdD] = useState()
   const handleSelectChangeDelete = (e) => {
     const {value} = e
@@ -122,61 +124,50 @@ export default function App() {
   function handleSubmitDelete(event){
     event.preventDefault();
     Axios.delete(`http://localhost:4001/user/${idD}`)
-    .then((res) => {
-      if(res.status === 200) alert("Usuário " + res.data.username + " apagado")
-    })
+    .then((res) => {if(res.status === 200) alert("Usuário " + res.data.username + " apagado")})
     .catch(function (err){console.log(err.response);})
   }
-  const formHandlersDelete = {handleSelectChangeDelete, handleSubmitDelete, optionsD, idD};
-
+  const formHandlersDelete = {handleSelectChangeDelete, handleSubmitDelete, optionsD};
   //////////////
   ////SEARCH////
   //////////////
-  //GET de pesquisa
   const [options,setOptions] = useState([])
   useEffect(() => {
     Axios.get("http://localhost:4001/user/search").then(res => {
       setOptions(res.data)
     }).catch((err) => { console.error("ops! ocorreu um erro" + err.response);})
   }, [])
-
   const [idS,setIdS] = useState()
   const handleSelectChange = (e) => {
     const {value} = e
     console.log(value)
     setIdS(value)
   }
-  function handleSubmitSearch(event){
+  function handleSubmitSearch (event) {
     event.preventDefault();
-    Axios.delete(`http://localhost:4001/user/${idS}`)
-    .then((res) => {
-
-    })
-    .catch(function (err){console.log(err.response);})
+    return(<Redirect path='/perfil'></Redirect>)
   }
+  const formHandlersBusca = {handleSelectChange, handleSubmitSearch, options};
+  
   return (
     <Router>
       <main>
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand><Link to="/">Home </Link></Navbar.Brand>
             <Nav className="mr-auto">
-              <Nav.Link><Link to="/perfil">Perfil</Link></Nav.Link>
-              <Nav.Link><Link to="/ponto">Ponto</Link></Nav.Link>
               <Nav.Link><Link to="/login">Login</Link></Nav.Link>
-              <Nav.Link><Link to="/diretor">Diretor</Link></Nav.Link>
+              <Nav.Link><Link to="/perfil">Perfil</Link></Nav.Link>
+              <Nav.Link><Link to="/diretor">Diretor</Link></Nav.Link>  
               <Nav.Link><Link to="/cadastro">Cadastro</Link></Nav.Link>
               <Nav.Link><Link to="/edit">Edit</Link></Nav.Link>
               <Nav.Link><Link to="/delete">Delete</Link></Nav.Link>
+              <Nav.Link><Link to="/ponto">Ponto</Link></Nav.Link>
             </Nav>
-            <Form inline onSubmit={handleSubmitSearch}>
-              <Select styles="neutral190" onChange={handleSelectChange} options={options} value={options.id}/>
-              <Button type="submit" variant="outline-light">Search</Button>
-            </Form>
         </Navbar>
         <br />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/diretor">{redirectToLogin()}<Diretor id={id}></Diretor></Route>
+          <Route path="/diretor">{redirectToLogin()}<Diretor formHandlersBusca={formHandlersBusca} id={id}></Diretor></Route>
           <Route path="/login">{redirectToPerfil()}<Login formHandlers={formHandlers}></Login></Route>
           <Route path="/cadastro">{redirectToHome()}<Cadastro formHandlersCadastro={formHandlersCadastro}></Cadastro></Route>
           <Route path="/edit">{redirectToHome()}<Edit formHandlersEdit={formHandlersEdit}></Edit></Route>

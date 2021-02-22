@@ -2,11 +2,12 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Select from 'react-select'
 import './edit.css';
 
 export default function Edit(props) {
   const {handleEmailEditChange, handlePhoneEditChange, handleNameEditChange,
-         handlePasswordEditChange, handleSubmitEdit} = props.formHandlersEdit;
+         handlePasswordEditChange, handleSelectChangeEdit, handleSubmitEdit, optionsE} = props.formHandlersEdit;
   return (
     <div>
       <Container fluid>
@@ -14,12 +15,10 @@ export default function Edit(props) {
           <Col>
             <h1>Página de Edição</h1>
             <Form onSubmit={handleSubmitEdit}>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>Escolha o Perfil a ser editado</Form.Label>
-              <Form.Control as="select">
-                <option>1</option>
-                <option>2</option>
-              </Form.Control>
+            <Form.Group>
+              <Form.Label>Selecione o usuário a ser editado</Form.Label>
+              <Select className="FormEdit" placeholder="Digite o nome do perfil a ser editado" styles="neutral190" 
+                      onChange={handleSelectChangeEdit} options={optionsE} value={optionsE.id}/>
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
@@ -35,7 +34,7 @@ export default function Edit(props) {
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Senha</Form.Label>
-                <Form.Control onChange={handlePasswordEditChange} type="senha" placeholder="Insira a nova senha" />
+                <Form.Control onChange={handlePasswordEditChange} type="password" placeholder="Insira a nova senha" />
               </Form.Group>
               <Button variant="warning" type="editar">Editar</Button>
             </Form>
