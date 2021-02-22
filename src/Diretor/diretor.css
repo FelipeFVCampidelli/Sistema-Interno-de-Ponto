@@ -9,15 +9,20 @@
   margin-left: 25%;
   max-width: 100%;
 }
-
 .amarelo{
   margin-top: 5%;
   margin-left: 15%;
   max-width: 100%;
 }
-
 .vermelho{
   margin-top: 5%;
   margin-left: 15%;
   max-width: 100%;
+}
+.FormDiretorP{
+  margin-top: 100px;
+}
+.FormDiretor{
+  width: 50%;
+  color: black;
 }

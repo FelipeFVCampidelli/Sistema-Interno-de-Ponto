@@ -186,5 +186,6 @@ const Home = () => (
   <Fragment>
     <h1>Home</h1>
     <p>Bem vindo de volta!</p>
+    <div className="Recipiente"><Link className="LinkLogin" to="/login">Login</Link></div>
   </Fragment>
 );

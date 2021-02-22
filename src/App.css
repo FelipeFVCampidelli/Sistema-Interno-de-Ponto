@@ -2,21 +2,36 @@ body {
   background-color: rgb(59, 60, 97);
   color: rgb(182, 182, 182);
 }
-
 .navbar-brand a {
   color: #fff;
   float:right
 }
-
 .nav-link a {
   color: #FFFFFF80;
 }
 #root > main > nav > form > div > div > div{
-  
   color: #000;
 }
-
 #root > main > nav > form > div > div > div.css-g1d714-ValueContainer{
   width: 150px;
   color: black;
+}
+.Recipiente{
+  width: 100%;
+  text-align: center;
+  float: right;
+}
+.LinkLogin{
+  text-decoration: none;
+  background-color: #0152cc;
+  color: #333333;
+  padding: 3px 9px 3px 9px;
+  border-top: 1px solid #333333;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #333333;
+  border-radius: 300px;
+}
+.LinkLogin:hover{
+  color: #000;
 }
